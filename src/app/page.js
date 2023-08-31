@@ -4,23 +4,82 @@ import Image from "next/image";
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [hasAccount, setHasAccount] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleCardClick = () => {
     setShowLoginForm(true);
+  };
+  console.log(username, password);
+  const handleAccountChange = () => {
+    setHasAccount(false);
+  };
+  const handleHasAccountChange = () => {
+    setHasAccount(true);
   };
 
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
+  const handleSignup = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password, email }),
+      });
+
+      if (response.ok) {
+        setMessage("Signup successful!");
+      } else {
+        const data = await response.json();
+        setMessage(data.error);
+      }
+    } catch (error) {
+      setMessage("An error occurred.");
+    }
+  };
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        setMessage("Signup successful!");
+        window.alert("Signup successful!");
+      } else {
+        const data = await response.json();
+        setMessage(data.error);
+      }
+    } catch (error) {
+      setMessage("An error occurred.");
+    }
+  };
+
   return (
-    <main className="flex h-screen flex-col items-center justify-center p-10 bg-stone-800 relative">
+    <main className="flex h-screen flex-col items-center justify-center  bg-stone-800 relative">
       <div
         onClick={handleCardClick}
         className="h-[500px] z-20 w-64 bg-white text-black px-4 py-2 shadow-white shadow-2xl cursor-pointer relative "
       >
-        <div className="h-full w-full justify-between flex-col flex">
+        <div className="h-full w-full justify-between flex-col flex ">
           <div className="text-3xl flex flex-col items-center w-8 ">
             <span className="font-bold">M</span>
             <span className="text-red-600 text-4xl ">&clubs;</span>
@@ -32,39 +91,97 @@ export default function Home() {
           ) : (
             // Render the login form here
             <form
-              className="bg-white text-black px-4 py-2 shadow-white shadow-2xl w-full flex flex-col gap-3"
-              // onSubmit={handleSubmit}
+              className="bg-white text-black px-4 py-2 shadow-white shadow-2xl w-full h-full flex flex-col gap-3"
+              onSubmit={handleLogin}
             >
               <div className="py-3 text-center font-bold text-lg tracking-wider uppercase">
                 Welcome to Mafia
               </div>
-              {/* For example: */}
-              <input
-                className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
-                type="text"
-                id="username"
-                placeholder="enter your username"
-              />
-              <div className="relative">
-                <input
-                  className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  placeholder="enter password"
-                />
-                <span
-                  className="absolute top-1/2 transform -translate-y-1/2 right-2 cursor-pointer"
-                  onClick={handleShowPassword}
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </span>{" "}
-              </div>
-              <button
-                className="bg-red-500 text-white px-4 text-lg py-3 hover:bg-black cursor-pointer"
-                type="submit"
-              >
-                Login
-              </button>
+              {hasAccount ? (
+                <div className="flex flex-col gap-3 ">
+                  <input
+                    className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
+                    type="text"
+                    id="username"
+                    placeholder="enter your username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <div className="relative">
+                    <input
+                      className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      placeholder="enter password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <span
+                      className="absolute top-1/2 transform -translate-y-1/2 right-2 cursor-pointer"
+                      onClick={handleShowPassword}
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </span>{" "}
+                  </div>
+                  <button className="bg-red-500 text-white px-4 text-lg py-3 hover:bg-black cursor-pointer">
+                    Login
+                  </button>
+                  <button
+                    className="underline text-xs underline-offset-2"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent form submission
+                      handleAccountChange();
+                    }}
+                  >
+                    I don&apos;t have an account
+                  </button>
+                </div>
+              ) : (
+                <div className=" h-full w-full flex flex-col justify-between ">
+                  <input
+                    className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
+                    type="text"
+                    id="username"
+                    placeholder="create a username"
+                  />
+                  <input
+                    className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
+                    type="text"
+                    id="email"
+                    placeholder="create a email"
+                  />
+                  <div className="relative">
+                    <input
+                      className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      placeholder="create password"
+                    />
+                    <span
+                      className="absolute top-1/2 transform -translate-y-1/2 right-2 cursor-pointer"
+                      onClick={handleShowPassword}
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </span>{" "}
+                  </div>
+                  <button
+                    className="bg-red-500 text-white px-4 text-lg py-3 hover:bg-black cursor-pointer"
+                    type="submit"
+                    onSubmit={handleSignup}
+                  >
+                    Sign Up
+                  </button>
+                  <button
+                    className="underline text-xs underline-offset-2"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent form submission
+                      handleHasAccountChange();
+                    }}
+                  >
+                    I already have an account
+                  </button>
+                </div>
+              )}
             </form>
           )}
           <div className="w-full flex justify-end">
