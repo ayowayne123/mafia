@@ -74,7 +74,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center  bg-stone-800 relative">
+    <main className="flex h-[100dvh] flex-col items-center justify-center  bg-stone-800 relative">
       <div
         onClick={handleCardClick}
         className="h-[500px] z-20 w-64 bg-white text-black px-4 py-2 shadow-white shadow-2xl cursor-pointer relative "
