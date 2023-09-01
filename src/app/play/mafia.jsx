@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import mafia from "./play/roles/mafia.svg";
+import mafia from "./roles/mafia.svg";
 
 function Mafia() {
   return (
