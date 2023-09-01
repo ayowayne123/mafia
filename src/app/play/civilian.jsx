@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import civilian from "@/app/play/roles/civilian.svg";
+import civilian from "./roles/civilian.svg";
 
 function Civilian() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import detective from "@/app/play/roles/detective.svg";
+import detective from "./roles/detective.svg";
 
 function Detective() {
   return (

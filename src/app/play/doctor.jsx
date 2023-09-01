@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import doc from "@/app/play/roles/doctor.svg";
+import doc from "./roles/doctor.svg";
 
 function Doctor() {
   return (

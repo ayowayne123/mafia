@@ -1,7 +1,10 @@
-import { getEnvVariable, getErrorResponse } from "@/lib/helpers";
-import { prisma } from "@/lib/prisma";
-import { signJWT } from "@/lib/token";
-import { LoginUserInput, LoginUserSchema } from "@/lib/validations/user.schema";
+import { getEnvVariable, getErrorResponse } from "../../../../lib/helpers";
+import { prisma } from "../../../../lib/prisma";
+import { signJWT } from "../../../../lib/token";
+import {
+  LoginUserInput,
+  LoginUserSchema,
+} from "../../../../lib/validations/user.schema";
 import { compare } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
