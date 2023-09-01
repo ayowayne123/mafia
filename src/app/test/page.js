@@ -1,53 +1,94 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function CreateGame() {
-  const [username, setUsername] = useState("");
-  const [message, setMessage] = useState("");
+function RegistrationForm() {
+  const [formData, setFormData] = useState({
+    email: "admin@admin.com",
+    username: "Admin",
+    password: "password123",
+    passwordConfirm: "password123",
+  });
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleChange = (e) => {
+    const { username, value } = e.target;
+    setFormData({
+      ...formData,
+      [username]: value,
+    });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
-      const response = await fetch("/api/create-game", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        setMessage("Game created successfully!");
+        // Registration was successful
+        // You can redirect or display a success message here
+        console.log("Registration successful");
       } else {
-        const data = await response.json();
-        setMessage(data.error);
+        // Handle registration error
+        console.error("Registration failed");
       }
     } catch (error) {
-      setMessage("An error occurred.");
+      console.error("An error occurred", error);
     }
   };
 
   return (
-    <div>
-      <h1>Create Game</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={handleUsernameChange}
-            required
-          />
-        </label>
-        <button type="submit">Create Game</button>
-      </form>
-      <p>{message}</p>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="passwordConfirm">Confirm Password:</label>
+        <input
+          type="password"
+          id="passwordConfirm"
+          name="passwordConfirm"
+          value={formData.passwordConfirm}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <button type="submit">Register</button>
+      </div>
+    </form>
   );
 }
+
+export default RegistrationForm;

@@ -1,11 +1,9 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const username = searchParams.get("username");
-  const email = searchParams.get("email");
-  const password = searchParams.get("password");
+export async function POST(request) {
+  const body = await request.json();
+  const { username, email, password } = body;
 
   try {
     if (!username || !email || !password)

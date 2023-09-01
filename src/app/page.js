@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export default function Home() {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -27,9 +28,14 @@ export default function Home() {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-  const handleSignup = async (event) => {
-    event.preventDefault();
-
+  const handleSubmit = (event) => {
+    if (hasAccount) {
+      handleLogin();
+    } else if (!hasAccount) {
+      handleSignup();
+    }
+  };
+  const handleSignup = async () => {
     try {
       const response = await fetch("/api/signup", {
         method: "POST",
@@ -49,9 +55,7 @@ export default function Home() {
       setMessage("An error occurred.");
     }
   };
-  const handleLogin = async (event) => {
-    event.preventDefault();
-
+  const handleLogin = async () => {
     try {
       const response = await fetch("/api/login", {
         method: "POST",
@@ -77,7 +81,7 @@ export default function Home() {
     <main className="flex h-[100dvh] min-h-[570px] overflow-scroll flex-col items-center justify-center  bg-stone-800 relative">
       <div
         onClick={handleCardClick}
-        className="h-[500px] z-20 w-64 bg-white text-black px-4 py-2 shadow-white shadow-2xl cursor-pointer relative "
+        className="h-[500px] lg:h-[600px] z-20 w-64 lg:w-80 bg-white text-black px-4 py-2 shadow-white shadow-2xl cursor-pointer relative "
       >
         <div className="h-full w-full justify-between flex-col flex ">
           <div className="text-3xl flex flex-col items-center w-8 ">
@@ -92,13 +96,13 @@ export default function Home() {
             // Render the login form here
             <form
               className="bg-white text-black px-4 py-2 shadow-white shadow-2xl w-full h-full flex flex-col gap-3"
-              onSubmit={handleLogin}
+              onSubmit={handleSubmit}
             >
-              <div className="py-3 text-center font-bold text-lg tracking-wider uppercase">
+              <div className="py-3 text-center font-bold text-lg lg:text-2xl tracking-wider uppercase">
                 Welcome to Mafia
               </div>
               {hasAccount ? (
-                <div className="flex flex-col gap-3 ">
+                <div className="h-full w-full flex flex-col justify-between">
                   <input
                     className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
                     type="text"
@@ -117,10 +121,18 @@ export default function Home() {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                     <span
-                      className="absolute top-1/2 transform -translate-y-1/2 right-2 cursor-pointer"
+                      className="absolute top-1/2  text-2xl text-red-500 transform -translate-y-1/2 right-2 cursor-pointer"
                       onClick={handleShowPassword}
                     >
-                      {showPassword ? "Hide" : "Show"}
+                      {showPassword ? (
+                        <>
+                          <AiFillEyeInvisible />
+                        </>
+                      ) : (
+                        <>
+                          <AiFillEye />
+                        </>
+                      )}
                     </span>{" "}
                   </div>
                   <button className="bg-red-500 text-white px-4 text-lg py-3 hover:bg-black cursor-pointer">
@@ -143,12 +155,16 @@ export default function Home() {
                     type="text"
                     id="username"
                     placeholder="create a username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                   <input
                     className="w-full appearance-none outline-none border-b border-black py-2 px-2 placeholder:italic placeholder:text-stone-500"
                     type="text"
                     id="email"
                     placeholder="create a email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <div className="relative">
                     <input
@@ -156,18 +172,27 @@ export default function Home() {
                       type={showPassword ? "text" : "password"}
                       id="password"
                       placeholder="create password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <span
-                      className="absolute top-1/2 transform -translate-y-1/2 right-2 cursor-pointer"
+                      className="absolute top-1/2  text-2xl text-red-500 transform -translate-y-1/2 right-2 cursor-pointer"
                       onClick={handleShowPassword}
                     >
-                      {showPassword ? "Hide" : "Show"}
+                      {showPassword ? (
+                        <>
+                          <AiFillEyeInvisible />
+                        </>
+                      ) : (
+                        <>
+                          <AiFillEye />
+                        </>
+                      )}
                     </span>{" "}
                   </div>
                   <button
                     className="bg-red-500 text-white px-4 text-lg py-3 hover:bg-black cursor-pointer"
                     type="submit"
-                    onSubmit={handleSignup}
                   >
                     Sign Up
                   </button>
