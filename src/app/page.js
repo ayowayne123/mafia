@@ -11,7 +11,7 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("test");
 
   const handleCardClick = () => {
     setShowLoginForm(true);
