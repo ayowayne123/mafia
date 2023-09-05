@@ -87,14 +87,6 @@ export default function Home() {
         onClick={handleCardClick}
         className="h-[500px] lg:h-[600px] z-20 w-64 lg:w-80 bg-white text-black px-4 py-2 shadow-white shadow-2xl cursor-pointer relative "
       >
-        {user ? (
-          <div className="bg-white text-black">
-            <h2>Welcome, {user.username}</h2>
-            {/* Render user-specific content */}
-          </div>
-        ) : (
-          <p>Please log in to access your profile.</p>
-        )}
         <div className="h-full w-full justify-between flex-col flex ">
           <div className="text-3xl flex flex-col items-center w-8 ">
             <span className="font-bold">M</span>
