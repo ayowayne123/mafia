@@ -67,12 +67,11 @@ export default function Home() {
         },
         body: JSON.stringify({ username, password }),
       });
-
+      const userInfo = await response.json();
       if (response.ok) {
-        const userData = username;
+        const userData = userInfo.thisUser;
         login(userData);
         setMessage("Log in successful!");
-        window.alert("Log in successful!");
       } else {
         const data = await response.json();
         setMessage(data.error);
@@ -90,7 +89,7 @@ export default function Home() {
       >
         {user ? (
           <div className="bg-white text-black">
-            <h2>Welcome, {user}</h2>
+            <h2>Welcome, {user.username}</h2>
             {/* Render user-specific content */}
           </div>
         ) : (

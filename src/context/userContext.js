@@ -16,7 +16,7 @@ export function UserProvider({ children }) {
     // Remove the user data from localStorage
     localStorage.removeItem("user");
   };
-  console.log(user);
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {

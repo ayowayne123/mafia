@@ -21,7 +21,12 @@ export async function POST(request) {
       );
     }
 
-    return NextResponse.json({ message: "Login successful" }, { status: 200 });
+    const thisUser = result.rows[0];
+
+    return NextResponse.json(
+      { message: "Login successful", thisUser },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

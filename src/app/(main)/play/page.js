@@ -16,7 +16,7 @@ function Page() {
     <div className="bg-[#0D0D0D] h-screen w-full flex flex-col md:flex-row overflow-hidden items-center gap-5 justify-center md:gap-8">
       <div className="text-white text-lg md:text-2xl lg:text3xl">
         {" "}
-        Welcome {user}, your role for this game is:
+        Welcome {user.username}, your role for this game is:
       </div>
       <Doctor />
       {/* <Civilian />
