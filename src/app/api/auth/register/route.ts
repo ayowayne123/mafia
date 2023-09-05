@@ -9,9 +9,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 export async function POST(req: NextRequest) {
+  console.log("test oh");
+
   try {
     const body = (await req.json()) as RegisterUserInput;
+    console.log(body);
     const data = RegisterUserSchema.parse(body);
+    console.log(data, "1st");
 
     const hashedPassword = await hash(data.password, 12);
 
@@ -43,6 +47,6 @@ export async function POST(req: NextRequest) {
       return getErrorResponse(409, "user with that email already exists");
     }
 
-    return getErrorResponse(500, error.message);
+    return getErrorResponse(500, error.message + "this error");
   }
 }

@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
+import { useUser } from "../context/userContext";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export default function Home() {
+  const { login } = useUser();
+  const { user } = useUser();
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [hasAccount, setHasAccount] = useState(false);
 
@@ -16,7 +18,7 @@ export default function Home() {
   const handleCardClick = () => {
     setShowLoginForm(true);
   };
-  console.log(username, password);
+
   const handleAccountChange = () => {
     setHasAccount(false);
   };
@@ -29,6 +31,7 @@ export default function Home() {
   };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     if (hasAccount) {
       handleLogin();
     } else if (!hasAccount) {
@@ -66,8 +69,10 @@ export default function Home() {
       });
 
       if (response.ok) {
-        setMessage("Signup successful!");
-        window.alert("Signup successful!");
+        const userData = username;
+        login(userData);
+        setMessage("Log in successful!");
+        window.alert("Log in successful!");
       } else {
         const data = await response.json();
         setMessage(data.error);
@@ -83,6 +88,14 @@ export default function Home() {
         onClick={handleCardClick}
         className="h-[500px] lg:h-[600px] z-20 w-64 lg:w-80 bg-white text-black px-4 py-2 shadow-white shadow-2xl cursor-pointer relative "
       >
+        {user ? (
+          <div className="bg-white text-black">
+            <h2>Welcome, {user}</h2>
+            {/* Render user-specific content */}
+          </div>
+        ) : (
+          <p>Please log in to access your profile.</p>
+        )}
         <div className="h-full w-full justify-between flex-col flex ">
           <div className="text-3xl flex flex-col items-center w-8 ">
             <span className="font-bold">M</span>

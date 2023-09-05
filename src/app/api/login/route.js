@@ -5,8 +5,6 @@ export async function POST(request) {
   const body = await request.json();
   const { username, password } = body;
 
-  console.log(username, password);
-
   try {
     if (!username || !password) {
       throw new Error("Username and password are required");
