@@ -28,7 +28,31 @@ function Join({ gameExist }) {
           },
         }
       );
-    !gameExist && toast("check this");
+    !gameExist && handleJoinApi(username, unique_code);
+  };
+
+  const handleJoinApi = async (username, unique_code) => {
+    console.log(username);
+
+    try {
+      const response = await fetch("/api/join-game", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, unique_code }),
+      });
+
+      if (response.ok) {
+        toast.success("Game Joined Created");
+        console.log(response);
+      } else {
+        const data = await response.json();
+        toast.error(data.error);
+      }
+    } catch (error) {
+      toast.error("An error occurred.");
+    }
   };
   return (
     <div>
