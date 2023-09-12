@@ -1,13 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import StartGame from "./startGame";
+import { Toast, Toaster, toast } from "react-hot-toast";
 
-function SelectPlayers({ players }) {
+function SelectPlayers({ players, canStart }) {
   const [localPlayers, setLocalPlayers] = useState(players);
-  console.log(localPlayers, players, setLocalPlayers);
+  const [confirmPlayers, setConfirmPlayers] = useState();
+  const [cannotStart, setCannotStart] = useState(true);
 
   useEffect(() => {
     setLocalPlayers(players);
   }, [players]);
+
+  useEffect(() => {
+    if (confirmPlayers > 6) {
+      setCannotStart(false);
+    }
+  }, [confirmPlayers]);
 
   const updatePlayerStatus = async (playerId, newStatus, gameId) => {
     try {
@@ -27,6 +36,7 @@ function SelectPlayers({ players }) {
             : player
         );
         setLocalPlayers(updatedLocalPlayers);
+        console.log(updatedLocalPlayers);
       } else {
         const data = await response.json();
         setError(data.error);
@@ -35,8 +45,34 @@ function SelectPlayers({ players }) {
       setError("An error occurred: " + error.message);
     }
   };
+  useEffect(() => {
+    const confirmedPlayers = localPlayers.filter(
+      (player) => player.started == "ready"
+    );
+    const checker = confirmedPlayers.length;
+    setConfirmPlayers(checker);
+  }, [localPlayers]);
+
+  const handleConfirm = (e) => {
+    e.preventDefault();
+
+    const confirmedPlayers = localPlayers.filter(
+      (player) => player.started == "ready"
+    );
+    const checker = confirmedPlayers.length;
+    setConfirmPlayers(checker);
+    cannotStart &&
+      toast(
+        "Cannot start game with less than 6 players\n\nAdd More players to begin the fun"
+      );
+    canStart(cannotStart);
+  };
+
   return (
     <div>
+      <div>
+        <Toaster />
+      </div>
       <table className="min-w-full divide-y divide-gray-200">
         <thead>
           <tr>
@@ -87,6 +123,9 @@ function SelectPlayers({ players }) {
           ))}
         </tbody>
       </table>
+      <button onClick={handleConfirm} className="bg-red-300 text-white">
+        Confirm All Players
+      </button>
       {/* {error && <div className="text-red-500">{error}</div>} */}
     </div>
   );

@@ -19,7 +19,7 @@ export async function GET(request) {
       WHERE user_id = ${user_id} 
     ) AS user_games
     ON games.unique_id = user_games.game_id
-    WHERE games.status IN ('active', 'pending');
+    WHERE games.status IN ('started', 'pending');
     `;
 
     const games = activegames.rows[0];

@@ -10,7 +10,7 @@ function Doctor() {
         <span className="text-[#E0292F] tracking-wider justify-center uppercase font-bold text-center text-2xl w-full flex py-2">
           Doctor
         </span>
-        <span className="text-base text-center flex leading-2 font-light">
+        <span className="text-base text-black text-center flex leading-2 font-light">
           You are the Doctor, the town&apos;s skilled healer. Each night, you
           can choose to protect one player from the Mafia&apos;s attacks. Use
           your power wisely to save lives.

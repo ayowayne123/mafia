@@ -10,7 +10,7 @@ function Civilian() {
         <span className="text-[#13378b] tracking-wider justify-center uppercase font-bold text-center text-2xl w-full flex py-2">
           Civilian
         </span>
-        <span className="text-sm text-center flex leading-2 font-light">
+        <span className="text-sm text-center text-black flex leading-2 font-light">
           As a Civilian, you are an innocent and ordinary member of the town.
           Your objective is to stay alive, trust your instincts, and find and
           eliminate the Mafia before they outnumber you.
