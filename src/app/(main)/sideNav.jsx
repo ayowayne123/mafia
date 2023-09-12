@@ -8,8 +8,8 @@ function SideNav({ username }) {
     <div className="w-full h-full text-white p-6 bg-black">
       This is the header {username?.username}
       <div className="flex flex-col gap-4">
-        <Create user={username} />
-        <Join />
+        {/* <Create user={username} />
+        <Join /> */}
       </div>
     </div>
   );

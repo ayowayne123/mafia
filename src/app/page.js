@@ -20,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     // Check if the user is logged in and, if so, navigate to the games page
     if (user) {
-      router.push("/games");
+      router.push("/start");
     } else {
       // Set loading to false when user data has been fetched
       setIsLoading(false);
