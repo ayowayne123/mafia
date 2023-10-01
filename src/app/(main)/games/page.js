@@ -117,7 +117,7 @@ function Page() {
 
   return (
     <div className="text-white  h-full w-full">
-      Active games for {user?.username}:
+      {/* Active games for {user?.username}:
       {activeGames.status == "pending" &&
         user?.user_id === activeGames?.host_user_id && (
           <div>
@@ -167,7 +167,7 @@ function Page() {
           friends
           <Role game_id={players[0]?.game_id} />
         </div>
-      )}
+      )} */}
       {/* {activeGames.status == "started" &&
         user?.user_id == activeGames?.host_user_id && (
           

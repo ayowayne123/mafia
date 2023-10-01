@@ -28,7 +28,7 @@ export async function POST(request) {
       await sql`
           UPDATE players
           SET role = ${role}, role_is_set = true
-          WHERE game_id = ${gameId} AND user_id = ${user_id};
+          WHERE game_id = ${gameId} AND user_id = ${user_id} AND started = 'started';
         `;
     }
 
