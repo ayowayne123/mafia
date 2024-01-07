@@ -9,6 +9,7 @@ function Page() {
   const { user } = useUser();
   const [activeGames, setActiveGames] = useState([]);
   const [gameExist, setGameExist] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Define an async function to fetch active games
@@ -18,9 +19,11 @@ function Page() {
           `/api/active-games?userId=${user?.user_id}`
         );
         const data = await response.json();
+        console.log(data,response)
 
         if (response.ok) {
           setActiveGames(data.games);
+          console.log(activeGames.length)
         } else {
           setError(data.error);
         }
@@ -34,20 +37,24 @@ function Page() {
       fetchActiveGames();
     }
   }, [user?.user_id, activeGames]);
+  
+
   useEffect(() => {
-    if (activeGames?.length !== 0) {
+    if (activeGames.length == 1) {
       setGameExist(true);
-      console.log(activeGames, "herre");
+      console.log(activeGames.length, "herre");
     }
-    activeGames && setGameExist(true);
+    
   }, []);
+
+  console.log(activeGames)
   return (
     <div className="text-white h-full w-full p-5">
       <div className="w-[500px] h-80 flex flex-row justify-between items-center mx-auto">
         <Create gameExist={gameExist} username={user?.username} />
         <Join gameExist={gameExist} />
       </div>
-      {activeGames && (
+      {gameExist && activeGames && (
         <div className="flex flex-row gap-8 items-center">
           <span> You have an active Game :</span>
           <Link

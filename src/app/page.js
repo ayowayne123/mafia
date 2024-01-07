@@ -80,8 +80,10 @@ export default function Home() {
         body: JSON.stringify({ username, password }),
       });
       const userInfo = await response.json();
+      console.log(response)
       if (response.ok) {
         const userData = userInfo.thisUser;
+        console.log(userData)
         login(userData);
         setMessage("Log in successful!");
       } else {

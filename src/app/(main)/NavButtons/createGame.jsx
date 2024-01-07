@@ -11,9 +11,10 @@ function generateCode() {
     const randomIndex = Math.floor(Math.random() * charset.length);
     code += charset[randomIndex];
   }
-  console.log(code);
+  console.log(code)
   return code;
-}
+} 
+
 
 //Check if the code is unique among existing IDs
 

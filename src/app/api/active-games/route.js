@@ -23,6 +23,11 @@ export async function GET(request) {
     `;
 
     const games = activegames.rows[0];
+   
+
+    if (!games) {
+      return NextResponse.json({ message: "No games found for the specified user." }, { status: 404 });
+    }
 
     return NextResponse.json({ games }, { status: 200 });
   } catch (error) {
